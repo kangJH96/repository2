@@ -2,6 +2,9 @@ package com.green.view.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,13 +34,15 @@ public class MemberController {
 	
 	// 일반 사용자 로그인 처리
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String loginAction(MemberVO vo, Model model) {
+	public String loginAction(MemberVO vo, Model model ,HttpServletRequest req) {
+		HttpSession session = req.getSession();
 		
 		MemberVO loginUser = memberService.getMember(vo);
 		
 		if (loginUser != null) {	// 사용자가 존재
+			session.setAttribute("loginUser", loginUser);
 			model.addAttribute("loginUser", loginUser);	// request 영역에 사용자정보 저장
-		
+			
 			return "redirect:/index";
 		} else {
 			return "member/login_fail";
