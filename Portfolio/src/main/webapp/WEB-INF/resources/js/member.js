@@ -81,6 +81,7 @@ function findMemberId() {
 
 // 비밀번호 찾기
 function findPassword() {
+	
 	if (document.findPW.id.value == "") {
 		alert("아이디를 입력해 주세요!");
 		document.findPW.memberId.focus();
